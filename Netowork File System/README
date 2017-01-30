@@ -1,0 +1,42 @@
+serverSNFS.c
+Server side program. It contains the server side API
+s_open(),s_close(),s_read(),s_write() and s_stat()
+To use the server program:
+gcc -g -o serverSNFS serverSNFS.c
+To run any other programs, run serverSNFS first.
+A sample running command line is:
+./serverSNFS --port 16892 --mount /tmp/yy291
+
+
+clientSNFS.c
+Client API library (declaration of all APIs are in client_api.h)
+It contains functions:
+void setServer(char* server,int portnum)
+int openFile(char* name);
+int closeFile(int fd);
+int readFile(int fd, void* buf);
+int writeFile(int fd, void* buf);
+int statFile(int fd, struct fileStat *buf);
+To compile:
+gcc -g -o clientapp clientapp.c clientSNFS.c
+To use this API library, (for example, program clientapp.c needs to use it):
+First run serverSNFS, then open another terminal and run other programs.
+
+
+clientapp.c
+This is the clientapp program.
+Run it with the clientSNFS.c in a different terminal window than serverSNFS.
+To compile the program:
+gcc -g -o clientapp clientapp.c clientSNFS.c
+
+
+loadtest.c
+This is the program for testing the throughput of the server.
+The compiling process is similar to clientapp.c.
+The program prints throughput for each client process, then you can add them together to get the total throughput for the server.
+You can change the source code to measure the throughput with different number of client processes.
+
+
+test.c
+This is the general test program for testing the clientSNFS API.
+The compilation is similar to clientapp.c
